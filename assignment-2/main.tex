@@ -1,0 +1,140 @@
+\documentclass[journal,12pt,twocolumn]{IEEEtran}
+
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{txfonts}         
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{hyperref}
+\usepackage{polynom}
+\usepackage{siunitx}
+\usepackage{verbatim}
+
+\newcommand{\solution}{\noindent \textbf{Solution: }}
+\providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
+\providecommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\providecommand{\cbrak}[1]{\ensuremath{\left\{#1\right\}}}
+\providecommand{\sbrak}[1]{\ensuremath{\left[#1\right]}}
+\providecommand{\der}[1]{\mathrm{d} #1}
+\providecommand{\gauss}[2]{\mathcal{N}\ensuremath{\left(#1,#2\right)}}
+\providecommand{\mbf}{\mathbf}
+\providecommand{\z}[1]{{\mathcal{Z}}\{#1\}}
+\providecommand{\ztrans}{\overset{\mathcal{Z}}{ \rightleftharpoons}}
+
+\providecommand{\parder}[2]{\frac{\partial}{\partial #2} \brak{#1}}
+
+\let\StandardTheFigure\thefigure
+\let\vec\mathbf
+
+%\numberwithin{equation}{section}
+\renewcommand{\thefigure}{\theenumi}
+\renewcommand\thesection{\arabic{section}}
+
+\newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
+\newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\define}{\stackrel{\triangle}{=}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\makeatletter
+\def\pld@CF@loop#1+{%
+    \ifx\relax#1\else
+        \begingroup
+          \pld@AccuSetX11%
+          \def\pld@frac{{}{}}\let\pld@symbols\@empty\let\pld@vars\@empty
+          \pld@false
+          #1%
+          \let\pld@temp\@empty
+          \pld@AccuIfOne{}{\pld@AccuGet\pld@temp
+                            \edef\pld@temp{\noexpand\pld@R\pld@temp}}%
+           \pld@if \pld@Extend\pld@temp{\expandafter\pld@F\pld@frac}\fi
+           \expandafter\pld@CF@loop@\pld@symbols\relax\@empty
+           \expandafter\pld@CF@loop@\pld@vars\relax\@empty
+           \ifx\@empty\pld@temp
+               \def\pld@temp{\pld@R11}%
+           \fi
+          \global\let\@gtempa\pld@temp
+        \endgroup
+        \ifx\@empty\@gtempa\else
+            \pld@ExtendPoly\pld@tempoly\@gtempa
+        \fi
+        \expandafter\pld@CF@loop
+    \fi}
+\def\pld@CMAddToTempoly{%
+    \pld@AccuGet\pld@temp\edef\pld@temp{\noexpand\pld@R\pld@temp}%
+    \pld@CondenseMonomials\pld@false\pld@symbols
+    \ifx\pld@symbols\@empty \else
+        \pld@ExtendPoly\pld@temp\pld@symbols
+    \fi
+    \ifx\pld@temp\@empty \else
+        \pld@if
+            \expandafter\pld@IfSum\expandafter{\pld@temp}%
+                {\expandafter\def\expandafter\pld@temp\expandafter
+                    {\expandafter\pld@F\expandafter{\pld@temp}{}}}%
+                {}%
+        \fi
+        \pld@ExtendPoly\pld@tempoly\pld@temp
+        \pld@Extend\pld@tempoly{\pld@monom}%
+    \fi}
+\makeatother
+
+\lstset {
+	frame=single, 
+	breaklines=true,
+	columns=fullflexible,
+	autogobble=true
+}             
+                               
+\title{Assignment 2 \\ \Large EE3900: Linear Systems and Signal Processing \\ \large Indian Institute of Technology Hyderabad}
+\author{Mukunda Reddy \\ \normalsize AI21BTECH11021  \\ \large Oppenheim and Schafer}
+
+
+\begin{document}
+
+	\maketitle
+	
+	\textbf{Problem 2.13 (b)} \\
+       which of the following discrete-time signals
+        are eigenfunctions of stable, 
+        LTI discrete-time systems? 
+        Given $3^{n}$
+        \\
+    \solution\\
+    Consider a linear time invariant system 𝐻
+ with impulse response h[n] operating on some space of infinite length discrete time signals. Recall that the output $H[x(n)]$ . \\
+$H(x[n])$ of the system for a given input $h[n]*x[n]$
+ is given by the discrete time convolution of the impulse response with the input
+ 
+ \begin{align*}
+ H[x(n)] &= \sum^{\infty} _{k = -\infty} h[k]x[n-k]  
+ \end{align*}
+ lets try $x(n) = e^{sn}$ Computing the output fot the input
+ \begin{align*}
+ H(e^{sn}) &= \sum^{\infty} _{k = -\infty} h[k]e^{s(n-k)} \\
+ &= \sum^{\infty} _{k = -\infty} h[k]e^{sn} e^{-sk} \\
+ &= e^{sn} \sum^{\infty} _{k = -\infty} h[k]e^{-sk} \\ 
+ \end{align*}
+ 
+ Therefore we have 
+ \begin{align*}
+ H(e^{sn}) &= \lambda_s e^{sn} \\
+ \lambda_s &= \sum^{\infty} _{k = -\infty} h[k]e^{-sk} \\
+ \end{align*}
+So the given inputs are eigenfunctions  and the output is given as shown.\\
+ 
+
+The output signal is given by 
+\begin{align*}
+ H(3^{n}) &= \lambda_s 3^{n} \\
+ \lambda_s &= \sum^{\infty} _{k = -\infty} h[k]3^{-k} \\
+ \end{align*}
+ 
+ We can write $3^{n}$ as $e^{n\ln 3}$.Here $s = \ln 3$.Therefore the given input signal is eigenfunction of LTI system.\\
+
+\end{document}
